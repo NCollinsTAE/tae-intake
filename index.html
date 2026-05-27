@@ -340,153 +340,71 @@
     var isDC = DC_TYPES.indexOf(apparatus) > -1;
     var L = '------------------------------';
     var E = '====================================================';
-    var b = 'TENNESSEE ASSOCIATED ELECTRIC - REPAIR INTAKE
-' + E + '
-EASA-Q:2000 | Doc No. 1.1.1 Rev 002
-
-';
-    b += 'JOB INFORMATION
-' + L + '
-';
-    b += 'Date Received:     ' + gv('dateReceived') + '
-';
-    b += 'Taken By:          ' + gv('takenBy') + '
-';
-    b += 'Customer:          ' + gv('customerName') + '
-';
-    b += 'Customer PO #:     ' + gv('customerPO') + '
-';
-    b += 'Contact:           ' + gv('contactName') + '
-';
-    b += 'Phone:             ' + gv('contactPhone') + '
-';
-    b += 'Quantity:          ' + (gv('quantity') || '1') + '
-
-';
-    b += 'APPARATUS INFORMATION
-' + L + '
-';
-    b += 'Apparatus Type:    ' + apparatus + '
-';
-    b += 'Manufacture:       ' + gv('manufacture') + '
-';
-    b += 'Serial #:          ' + gv('serialNum') + '
-';
-    b += 'Model:             ' + gv('model') + '
-';
-    b += 'Stock #:           ' + gv('stockNum') + '
-';
-    b += 'Spec #:            ' + gv('specNum') + '
-';
-    b += 'Type:              ' + gv('type') + '
-';
-    b += 'ID:                ' + gv('unitId') + '
-';
-    b += 'Date Code:         ' + gv('dateCode') + '
-';
-    b += 'Frame:             ' + gv('frame') + '
-';
+    var b = 'TENNESSEE ASSOCIATED ELECTRIC - REPAIR INTAKE\n' + E + '\nEASA-Q:2000 | Doc No. 1.1.1 Rev 002\n\n';
+    b += 'JOB INFORMATION\n' + L + '\n';
+    b += 'Date Received:     ' + gv('dateReceived') + '\n';
+    b += 'Taken By:          ' + gv('takenBy') + '\n';
+    b += 'Customer:          ' + gv('customerName') + '\n';
+    b += 'Customer PO #:     ' + gv('customerPO') + '\n';
+    b += 'Contact:           ' + gv('contactName') + '\n';
+    b += 'Phone:             ' + gv('contactPhone') + '\n';
+    b += 'Quantity:          ' + (gv('quantity') || '1') + '\n\n';
+    b += 'APPARATUS INFORMATION\n' + L + '\n';
+    b += 'Apparatus Type:    ' + apparatus + '\n';
+    b += 'Manufacture:       ' + gv('manufacture') + '\n';
+    b += 'Serial #:          ' + gv('serialNum') + '\n';
+    b += 'Model:             ' + gv('model') + '\n';
+    b += 'Stock #:           ' + gv('stockNum') + '\n';
+    b += 'Spec #:            ' + gv('specNum') + '\n';
+    b += 'Type:              ' + gv('type') + '\n';
+    b += 'ID:                ' + gv('unitId') + '\n';
+    b += 'Date Code:         ' + gv('dateCode') + '\n';
+    b += 'Frame:             ' + gv('frame') + '\n';
     if (isAC) {
-      b += '
-ELECTRICAL SPECS (AC)
-' + L + '
-';
-      b += 'Power (HP):        ' + gv('power') + '
-';
-      b += 'Voltage:           ' + gv('voltage') + '
-';
-      b += 'Amps:              ' + gv('amps') + '
-';
-      b += 'Phase:             ' + gv('phase') + '
-';
-      b += 'Speed (RPM):       ' + gv('speed') + '
-';
-      b += 'Hertz:             ' + gv('hertz') + '
-';
-      b += 'Enclosure:         ' + gv('enclosure') + '
-';
-      b += 'Mounting:          ' + gv('mounting') + '
-';
-      b += 'Flange:            ' + gv('flange') + '
-';
-      b += 'Design:            ' + gv('design') + '
-';
-      b += 'Duty:              ' + gv('duty') + '
-';
-      b += 'Service Factor:    ' + gv('serviceFactor') + '
-';
-      b += 'Efficiency:        ' + gv('efficiency') + '
-';
-      b += 'KVA Code Letter:   ' + gv('kvaCode') + '
-';
-      b += 'BRGPE:             ' + gv('brgpe') + '
-';
-      b += 'BRGOPE:            ' + gv('brgope') + '
-';
-      b += 'Coupling:          ' + gv('coupling') + '
-';
-      b += 'Pulley:            ' + gv('pulley') + '
-';
-      b += 'Terminal Box:      ' + gv('terminalBox') + '
-';
-      b += 'Heaters:           ' + gv('heaters') + '
-';
-      b += 'Bearing Probes:    ' + gv('bearingProbes') + '
-';
+      b += '\nELECTRICAL SPECS (AC)\n' + L + '\n';
+      b += 'Power (HP):        ' + gv('power') + '\n';
+      b += 'Voltage:           ' + gv('voltage') + '\n';
+      b += 'Amps:              ' + gv('amps') + '\n';
+      b += 'Phase:             ' + gv('phase') + '\n';
+      b += 'Speed (RPM):       ' + gv('speed') + '\n';
+      b += 'Hertz:             ' + gv('hertz') + '\n';
+      b += 'Enclosure:         ' + gv('enclosure') + '\n';
+      b += 'Mounting:          ' + gv('mounting') + '\n';
+      b += 'Flange:            ' + gv('flange') + '\n';
+      b += 'Design:            ' + gv('design') + '\n';
+      b += 'Duty:              ' + gv('duty') + '\n';
+      b += 'Service Factor:    ' + gv('serviceFactor') + '\n';
+      b += 'Efficiency:        ' + gv('efficiency') + '\n';
+      b += 'KVA Code Letter:   ' + gv('kvaCode') + '\n';
+      b += 'BRGPE:             ' + gv('brgpe') + '\n';
+      b += 'BRGOPE:            ' + gv('brgope') + '\n';
+      b += 'Coupling:          ' + gv('coupling') + '\n';
+      b += 'Pulley:            ' + gv('pulley') + '\n';
+      b += 'Terminal Box:      ' + gv('terminalBox') + '\n';
+      b += 'Heaters:           ' + gv('heaters') + '\n';
+      b += 'Bearing Probes:    ' + gv('bearingProbes') + '\n';
     } else if (isDC) {
-      b += '
-ELECTRICAL SPECS (DC)
-' + L + '
-';
-      b += 'Power (HP):        ' + gv('dcPower') + '
-';
-      b += 'Arm Volt:          ' + gv('armVolt') + '
-';
-      b += 'Arm Amps:          ' + gv('armAmps') + '
-';
-      b += 'Field Volt:        ' + gv('fieldVolt') + '
-';
-      b += 'Field Amps:        ' + gv('fieldAmps') + '
-';
-      b += 'Speed (RPM):       ' + gv('dcSpeed') + '
-';
-      b += 'Enclosure:         ' + gv('dcEnclosure') + '
-';
-      b += 'BRGPE:             ' + gv('dcBrgpe') + '
-';
-      b += 'BRGOPE:            ' + gv('dcBrgope') + '
-';
-      b += 'Coupling:          ' + gv('dcCoupling') + '
-';
-      b += 'Heaters:           ' + gv('dcHeaters') + '
-';
-      b += 'Bearing Probes:    ' + gv('dcBearingProbes') + '
-';
+      b += '\nELECTRICAL SPECS (DC)\n' + L + '\n';
+      b += 'Power (HP):        ' + gv('dcPower') + '\n';
+      b += 'Arm Volt:          ' + gv('armVolt') + '\n';
+      b += 'Arm Amps:          ' + gv('armAmps') + '\n';
+      b += 'Field Volt:        ' + gv('fieldVolt') + '\n';
+      b += 'Field Amps:        ' + gv('fieldAmps') + '\n';
+      b += 'Speed (RPM):       ' + gv('dcSpeed') + '\n';
+      b += 'Enclosure:         ' + gv('dcEnclosure') + '\n';
+      b += 'BRGPE:             ' + gv('dcBrgpe') + '\n';
+      b += 'BRGOPE:            ' + gv('dcBrgope') + '\n';
+      b += 'Coupling:          ' + gv('dcCoupling') + '\n';
+      b += 'Heaters:           ' + gv('dcHeaters') + '\n';
+      b += 'Bearing Probes:    ' + gv('dcBearingProbes') + '\n';
     }
-    b += '
-REPAIR DETAILS
-' + L + '
-';
-    b += 'Rush Order:        ' + gv('isRush') + '
-';
-    b += 'Requested Return:  ' + gv('returnDate') + '
-
-';
-    b += 'Customer Reported Problem:
-' + gv('problemDesc') + '
-
-';
-    b += 'Visual Condition:
-' + (gv('visualCondition') || '(not noted)') + '
-
-';
-    b += 'Additional Notes:
-' + (gv('additionalNotes') || '(none)') + '
-
-';
-    b += E + '
-Tennessee Associated Electric | Knoxville, TN
-Your Partner in Power.';
+    b += '\nREPAIR DETAILS\n' + L + '\n';
+    b += 'Rush Order:        ' + gv('isRush') + '\n';
+    b += 'Requested Return:  ' + gv('returnDate') + '\n\n';
+    b += 'Customer Reported Problem:\n' + gv('problemDesc') + '\n\n';
+    b += 'Visual Condition:\n' + (gv('visualCondition') || '(not noted)') + '\n\n';
+    b += 'Additional Notes:\n' + (gv('additionalNotes') || '(none)') + '\n\n';
+    b += E + '\nTennessee Associated Electric | Knoxville, TN\nYour Partner in Power.';
     return b;
   }
 
