@@ -70,6 +70,13 @@
   .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--success);color:#fff;padding:14px 24px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:600;opacity:0;transition:all 0.3s ease;z-index:999;white-space:nowrap;max-width:90vw;box-shadow:0 4px 16px rgba(0,0,0,0.15);}
   .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
   .toast.error{background:var(--red);}
+  .contact-wrap{position:relative;}
+  .contact-sugg{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--input-focus);border-top:none;border-radius:0 0 4px 4px;z-index:50;max-height:180px;overflow-y:auto;box-shadow:0 4px 12px rgba(27,58,140,0.12);}
+  .contact-sugg-item{padding:10px 12px;cursor:pointer;border-bottom:1px solid var(--border);}
+  .contact-sugg-item:last-child{border-bottom:none;}
+  .contact-sugg-item:active{background:var(--section-hd);}
+  .contact-sugg-name{font-size:15px;color:var(--text);}
+  .contact-sugg-phone{font-size:12px;color:var(--muted);display:block;margin-top:2px;}
 </style>
 </head>
 <body>
@@ -96,8 +103,8 @@
         <div class="grid g-2">
           <div class="field"><label>Customer Name <span class="req">*</span></label><input type="text" id="customerName" placeholder="Company or individual" required></div>
           <div class="field"><label>Customer PO #</label><input type="text" id="customerPO"></div>
-          <div class="field"><label>Contact Name</label><input type="text" id="contactName"></div>
-          <div class="field"><label>Contact Phone</label><input type="text" id="contactPhone" inputmode="tel"></div>
+          <div class="field contact-wrap"><label>Contact Name <span class="req">*</span></label><input type="text" id="contactName" autocomplete="off" placeholder="Contact person"><div id="contactSuggestions" class="contact-sugg"></div></div>
+          <div class="field"><label>Contact Phone <span class="req">*</span></label><input type="text" id="contactPhone" inputmode="tel" placeholder="865-555-0100"></div>
         </div>
       </div>
     </div>
@@ -267,6 +274,18 @@
   document.getElementById('cameraInput').addEventListener('change', function() { handlePhotos(this.files); this.value=''; });
   document.getElementById('libraryInput').addEventListener('change', function() { handlePhotos(this.files); this.value=''; });
 
+  document.getElementById('contactName').addEventListener('input', function() {
+    showContactSuggestions(this.value.trim());
+  });
+  document.getElementById('contactName').addEventListener('focus', function() {
+    if (this.value.trim()) showContactSuggestions(this.value.trim());
+  });
+  document.getElementById('contactName').addEventListener('blur', function() {
+    setTimeout(function() {
+      document.getElementById('contactSuggestions').style.display = 'none';
+    }, 150);
+  });
+
   window.handleApparatusChange = function() {
     var val = document.getElementById('apparatusType').value;
     document.getElementById('acFields').classList.toggle('visible', AC_TYPES.indexOf(val) > -1);
@@ -416,11 +435,50 @@
     }).join('');
   }
 
+  var CONTACTS_KEY = 'tae_contacts';
+
+  function loadContacts() {
+    try { return JSON.parse(localStorage.getItem(CONTACTS_KEY) || '[]'); } catch(e) { return []; }
+  }
+
+  function saveContact(name, phone) {
+    if (!name || !phone) return;
+    var list = loadContacts().filter(function(c) { return c.name.toLowerCase() !== name.toLowerCase(); });
+    list.unshift({ name: name, phone: phone });
+    if (list.length > 30) list = list.slice(0, 30);
+    try { localStorage.setItem(CONTACTS_KEY, JSON.stringify(list)); } catch(e) {}
+  }
+
+  function showContactSuggestions(query) {
+    var box = document.getElementById('contactSuggestions');
+    var matches = loadContacts().filter(function(c) {
+      return c.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
+    });
+    if (!query || !matches.length) { box.style.display = 'none'; return; }
+    box.innerHTML = matches.map(function(c, i) {
+      return '<div class="contact-sugg-item" data-idx="' + i + '">' +
+        '<span class="contact-sugg-name">' + c.name + '</span>' +
+        '<span class="contact-sugg-phone">' + c.phone + '</span></div>';
+    }).join('');
+    box.querySelectorAll('.contact-sugg-item').forEach(function(item) {
+      item.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        var idx = parseInt(item.getAttribute('data-idx'));
+        document.getElementById('contactName').value = matches[idx].name;
+        document.getElementById('contactPhone').value = matches[idx].phone;
+        box.style.display = 'none';
+      });
+    });
+    box.style.display = 'block';
+  }
+
   function submitForm() {
     var checks = [
       {id:'dateReceived', label:'Date Received'},
       {id:'takenBy', label:'Taken By'},
       {id:'customerName', label:'Customer Name'},
+      {id:'contactName', label:'Contact Name'},
+      {id:'contactPhone', label:'Contact Phone'},
       {id:'apparatusType', label:'Apparatus Type'},
       {id:'problemDesc', label:'Problem Description'}
     ];
@@ -464,6 +522,7 @@
       }).then(function() {
         document.getElementById('overlay').classList.remove('show');
         document.getElementById('submitBtn').disabled = false;
+        saveContact(gv('contactName'), gv('contactPhone'));
         showToast('Ticket sent to sales@tn-associated.com', false);
         setTimeout(function() {
           if (confirm('Ticket sent! Clear form for next job?')) resetForm();
